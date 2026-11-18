@@ -1,0 +1,14 @@
+{
+  "name": "jenkins-cicd-demo",
+  "version": "1.0.0",
+  "description": "Jenkins CI/CD Pipeline Demo",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
