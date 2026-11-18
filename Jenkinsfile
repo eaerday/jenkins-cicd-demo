@@ -107,7 +107,7 @@ pipeline {
                 sh '''
                     docker run -d \
                     --name jenkins-demo-app \
-                    -p 3000:3000 \
+                    -p 3001:3000 \
                     --restart unless-stopped \
                     jenkins-cicd-demo:${BUILD_NUMBER}
                 '''
