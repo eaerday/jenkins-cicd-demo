@@ -28,8 +28,8 @@ const server = http.createServer((req, res) => {
     });
 
     res.end(JSON.stringify({
-        message: 'Jenkins CI/CD Pipeline Basarili!',
-        version: '1.0.0'
+        message: 'Jenkins ile Otomatik Deployment Basarili!',
+        version: '2.0.0'
     }));
 });
 
