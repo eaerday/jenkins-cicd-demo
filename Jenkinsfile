@@ -88,6 +88,42 @@ pipeline {
             }
         }
 
+        // ==========================================
+        // STAGE 4 - DEPLOY
+        // ==========================================
+
+        stage('Deploy') {
+
+            steps {
+
+                echo 'STAGE 4: Deployment basliyor...'
+
+                // Önceden oluşturulmuş container varsa kaldırıyoruz.
+                sh '''
+                    docker rm -f jenkins-demo-app || true
+                '''
+
+                // Build Stage'inde oluşturduğumuz image'ı kullanıyoruz.
+                sh '''
+                    docker run -d \
+                    --name jenkins-demo-app \
+                    -p 3000:3000 \
+                    --restart unless-stopped \
+                    jenkins-cicd-demo:${BUILD_NUMBER}
+                '''
+
+                // Uygulamanın başlaması için bekliyoruz.
+                sh 'sleep 5'
+
+                // Uygulamanın sağlıklı çalıştığını kontrol ediyoruz.
+                sh '''
+                    docker exec jenkins-demo-app \
+                    node -e "fetch('http://127.0.0.1:3000/health').then(r => { if (!r.ok) process.exit(1); return r.json(); }).then(d => { console.log(d); if (d.status !== 'UP') process.exit(1); }).catch(() => process.exit(1))"
+                '''
+
+                echo 'STAGE 4: Deployment basariyla tamamlandi.'
+            }
+        }
         
     }
 
