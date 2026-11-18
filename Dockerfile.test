@@ -1,0 +1,20 @@
+# Testleri çalıştıracağımız Node.js ortamı.
+FROM node:22-alpine
+
+# Container içerisindeki çalışma dizini.
+WORKDIR /app
+
+# Dependency dosyalarını kopyalıyoruz.
+COPY package*.json ./
+
+# Uygulama bağımlılıklarını yüklüyoruz.
+RUN npm ci
+
+# Uygulama dosyamızı kopyalıyoruz.
+COPY app.js .
+
+# Test dosyalarını kopyalıyoruz.
+COPY test ./test
+
+# Container başladığında testleri çalıştırıyoruz.
+CMD ["npm", "test"]

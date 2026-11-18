@@ -1,5 +1,4 @@
 node_modules
 .git
 Jenkinsfile
-test
 npm-debug.log

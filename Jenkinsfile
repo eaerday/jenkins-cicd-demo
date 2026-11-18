@@ -60,6 +60,35 @@ pipeline {
                 echo 'STAGE 2: Docker image basariyla olusturuldu.'
             }
         }
+
+        // ==========================================
+        // STAGE 3 - TEST
+        // ==========================================
+
+        stage('Test') {
+
+            steps {
+
+                echo 'STAGE 3: Testler calistiriliyor...'
+
+                // Testler için ayrı bir Docker image oluşturuyoruz.
+                sh '''
+                    docker build \
+                    -f Dockerfile.test \
+                    -t jenkins-cicd-demo-test:${BUILD_NUMBER} .
+                '''
+
+                // Oluşturduğumuz test image'ını çalıştırıyoruz.
+                sh '''
+                    docker run --rm \
+                    jenkins-cicd-demo-test:${BUILD_NUMBER}
+                '''
+
+                echo 'STAGE 3: Testler basariyla tamamlandi.'
+            }
+        }
+
+        
     }
 
     // Pipeline tamamlandıktan sonra çalışacak işlemler.
